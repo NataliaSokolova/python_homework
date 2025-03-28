@@ -2,6 +2,8 @@ import csv
 import traceback
 import os 
 import custom_module
+from datetime import datetime
+
 
 
 
@@ -131,19 +133,51 @@ def read_csv_to_dict(filepath):
          rows = [tuple(row) for row in reader]
      return {"fields": fields, "rows": rows}    
 
-def read_minutes():
-    minutes1 = read_csv_to_dict("./minutes.csv")
-    minutes2 = read_csv_to_dict("./minutes.csv")
-    return minutes1, minutes2
-
-minutes1, minutes2 = read_minutes()
-
 
 #--------------------------------13
 
+def read_minutes():
+    def read_file(filename):
+        with open(filename, "r") as file:
+            reader = csv.reader(file)
+            fields = next(reader)
+            rows = [tuple(row) for row in reader]
+        return {"fields": fields, "rows": rows}
+
+    minutes1 = read_file("../csv/minutes1.csv")
+    minutes2 = read_file("../csv/minutes2.csv")
+    return minutes1, minutes2
+minutes1, minutes2 = read_minutes() 
+
+
 def create_minutes_set():
     set1 = set(minutes1["rows"])
-    set2 = set(minutes1["rows"])
-    return set1.union(set2)
+    set2 = set(minutes2["rows"])
+    combined_set = set1.union(set2)
+    return combined_set
 
 minutes_set = create_minutes_set()
+print(minutes_set)
+
+#--------------------------------14
+
+
+
+def create_minutes_list():
+        minutes_list = list(map(lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y")), minutes_set))
+        return minutes_list
+minutes_list = create_minutes_list()
+
+
+#--------------------------------15
+
+def write_sorted_list():
+    sorted_minutes = sorted(minutes_list, key=lambda x: x[1])
+    sorted_list_str = list(map(lambda x: (x[0], x[1].strftime("%B %d, %Y")), sorted_minutes))
+    with open("./minutes.csv", mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(minutes1["fields"])
+        for row in sorted_list_str:
+            writer.writerow(row)
+        return sorted_list_str
+write_sorted_list()        
