@@ -1,0 +1,33 @@
+1. Restricted Sections for Crawling:
+- Special pages (Special:Search, Special:Random, etc.)
+- Administration pages (Wikipedia:Articles_for_deletion, Wikipedia:Requests_for_arbitration)
+- User pages and user talk pages
+- Discussion pages (all *_talk: namespaces)
+- Copyright investigation pages
+- Deletion-related pages (votes for deletion, deletion discussions)
+- Administrator noticeboards and election pages
+- Sandbox pages (Module:Sandbox, Template:Sandbox)
+- Spam-related pages
+
+2. Specific User Agent Rules:
+- MJ12bot - completely disallowed
+- Mediapartners-Google* (advertising bots) - disallowed
+- IsraBot and Orthogaffe (Wikipedia work bots) - allowed
+- UbiCrawler, DOC, Zao - disallowed
+- Known problematic bots (HTTrack, WebCopier, Teleport, etc.) - all disallowed
+- wget in recursive mode - disallowed unless properly configured
+
+3. Purpose of robots.txt:
+The robots.txt file serves as a communication protocol between websites and web crawlers, specifying which areas should not be accessed. 
+It promotes ethical scraping by:
+- Protecting sensitive or private content from being indexed
+- Preventing server overload from aggressive crawlers
+- Maintaining website owners' control over their content distribution
+- Providing clear guidelines for respectful data collection practices
+
+
+This analysis shows that Wikipedia uses robots.txt to:
+
+Protect sensitive discussion and administrative pages
+Block known problematic crawlers
+Allow well-behaved bots to access public content while respecting server resources
